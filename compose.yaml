@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  backend:
+    container_name: chatter-chain-app
+    image: chatter-chain:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      - PORT=8080
+    ports:
+      - "8080:8080"
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 700M
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - database
+    networks:
+      - chatter-chain-network
+
+  database:
+    container_name: chatter-chain-db
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    restart: on-failure
+    networks:
+      - chatter-chain-network
+
+networks:
+  chatter-chain-network:
+    name: chatter-chain-network
+    driver: bridge

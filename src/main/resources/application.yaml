@@ -1,0 +1,16 @@
+server:
+  port:  ${PORT:8080}
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/chatter-chain
+
+management:
+  endpoint: 
+    beans:
+      enabled: true
+    info:
+      enabled: true
+    health:
+      enabled: true
